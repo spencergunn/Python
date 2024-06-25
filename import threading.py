@@ -7,7 +7,7 @@ pos =0
 def forward(steps):
     global pos
     counter=0
-    print("Forward Task started. Type 'stop' to end the task.")
+    print("Forward Task started. Type 'stop' to end the task.", steps)
     while not stop_event.is_set():
         print("Task is running...")
         time.sleep(1)
@@ -21,7 +21,7 @@ def forward(steps):
 def backward(steps):
     global pos
     counter =0
-    print("backward Task started. Type 'stop' to end the task.")
+    print("backward Task started. Type 'stop' to end the task.", steps)
     while not stop_event.is_set():
         print("Task is running...")
         time.sleep(1)
@@ -70,21 +70,23 @@ while True:
         break
         
     if user_input.startswith("fw"):
+        s = int(user_input[2:])
         if task_thread.is_alive():
             stop_event.set()
             task_thread.join()
         
-        task_thread = threading.Thread(target=forward, args={100})
+        task_thread = threading.Thread(target=forward, args={s})
         task_thread.start( )
 
         print( user_input)
         
     if user_input.startswith("bw"):
+        s = int(user_input[2:])
         if task_thread.is_alive():
             stop_event.set()
             task_thread.join()
         
-        task_thread = threading.Thread(target=backward, args={100})
+        task_thread = threading.Thread(target=backward, args={s})
         task_thread.start( )
         print( user_input)
         
